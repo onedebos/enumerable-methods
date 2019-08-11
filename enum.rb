@@ -28,7 +28,7 @@ def my_each_with_index
         self.to_enum
     end
 end
-=end
+
 
 def my_select
     if block_given?
@@ -43,10 +43,22 @@ def my_select
         self.to_enum
     end
 end
-    
+=end
+def my_all
+    if block_given?
+
+        self.my_each{ |i| return false if yield(i)==false}
+                return true
+            else
+                self.my_each {|i| return false unless i==true}
+                return true
+        end
+    end
 
 
-puts [1,2,3,4,5].my_select{|n| n.even? }
+
+
+puts [1,2,3,4,5].my_all{|n| n%2==0 }
 
 end
 
