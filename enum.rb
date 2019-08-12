@@ -15,7 +15,6 @@ module Enumerable
         
     end
 
-=begin
 def my_each_with_index
     if block_given?
         i=0
@@ -43,22 +42,72 @@ def my_select
         self.to_enum
     end
 end
-=end
+
 def my_all
     if block_given?
-
-        self.my_each{ |i| return false if yield(i)==false}
-                return true
-            else
-                self.my_each {|i| return false unless i==true}
-                return true
-        end
+        self.my_each do |i|
+            return true if yield(i) 
     end
+end
+    false
+end
 
 
+def my_any
+    if block_given?
+    self.my_each{|i| return true if yield(i)}
+    end
+    false
+end
 
+def my_none
+    if block_given?
+        self.my_each {|i| return false if yield(i)}
+    end
+    true
+end
 
-puts [1,2,3,4,5].my_all{|n| n%2==0 }
+def my_count
+    count=0
+    self.my_each do |i|
+    if block_given? && yield(i)
+        count+=1
+    else
+        count=self.length
+ end
+end
+ count
+end
+
+  def my_map(proc = nil)
+    result = []
+    if proc
+      my_each do |p|
+        result << proc.call(p)
+      end
+    else
+      my_each do |a|
+        result << yield(a)
+      end
+    end
+    result
+  end
+
+  def my_inject(init = self[0])
+    result = init
+    self.my_each do |i|
+      next if init == i
+
+      result = yield(result, i)
+    end
+    result
+  end
+end
+
+def multiply_els(arg)
+  arg.my_inject(1) { |a, b| a * b }
+end
+
 
 end
 
