@@ -108,6 +108,8 @@ def multiply_els(arg)
   arg.my_inject(1) { |a, b| a * b }
 end
 
+#test
+[1,2,3,4,5].my_each{|i| puts i}
 
 end
 
