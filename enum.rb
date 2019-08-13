@@ -106,4 +106,4 @@ end
 
 # test
 puts multiply_els([1, 2, 3, 4, 5])
-puts [1,1,1,2,3,4,5].my_count(1)
+puts [1, 1, 1, 2, 3, 4, 5].my_count(1)
