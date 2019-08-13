@@ -2,7 +2,7 @@
 
 module Enumerable
   def my_each
-    if block_given?
+      if block_given?
       i = 0
       while i < length
         yield(self[i])
@@ -16,7 +16,7 @@ module Enumerable
   end
 
   def my_each_with_index
-    if block_given?
+      if block_given?
       i = 0
       while i < length
         yield(self[i], i)
@@ -29,45 +29,41 @@ module Enumerable
   end
 
   def my_select
-    if block_given?
       selected = []
-      my_each do |x|
-        selected.push(x) if yield(x)
+      self.my_each do |x|
+           selected.push(x) if yield(x)
       end
       selected
-    else
-      to_enum
-    end
   end
 
-  def my_all
-    if block_given?
-      my_each do |i|
-        return true if yield(i)
+  def my_all?
+      if block_given?
+          self.my_each do |i|
+               return true if yield(i)
       end
     end
     false
   end
 
-  def my_any
-    if block_given?
-      my_each { |i| return true if yield(i) }
-    end
+  def my_any?
+      if block_given?
+          self.my_each { |i| return true if yield(i) }
+      end
     false
   end
 
-  def my_none
-    if block_given?
-      my_each { |i| return false if yield(i) }
+  def my_none?
+      if block_given?
+         self.my_each { |i| return false if yield(i) }
     end
     true
   end
 
   def my_count
-    count = 0
-    my_each do |i|
-      if block_given? && yield(i)
-        count += 1
+      count = 0
+      self.my_each do |a|
+        if block_given? && yield(c)
+            count += 1
       else
         count = length
       end
@@ -76,10 +72,10 @@ module Enumerable
   end
 
   def my_map(proc = nil)
-    result = []
-    if proc
-      my_each do |p|
-        result << proc.call(p)
+      result = []
+      if proc
+         my_each do |p|
+         result << proc.call(p)
       end
     else
       my_each do |a|
@@ -90,10 +86,9 @@ module Enumerable
   end
 
   def my_inject(init = self[0])
-    result = init
-    my_each do |i|
-      next if init == i
-
+      result = init
+      my_each do |i|
+        next if init == i
       result = yield(result, i)
     end
     result
