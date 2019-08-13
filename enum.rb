@@ -59,16 +59,20 @@ module Enumerable
     true
   end
 
-  def my_count
-    count = 0
-    my_each do |_a|
-      if block_given? && yield(c)
-        count += 1
-      else
-        count = length
+  def my_count(arg = nil)
+    if !arg.nil?
+      i = 0
+      my_each do |item|
+        i += 1 if item == arg
       end
+      i
+    elsif block_given?
+      my_select { |item| yield(item) }.length
+    else
+      i = 0
+      my_each { |_item| i += 1 }
+      i
     end
-    count
   end
 
   def my_map(proc = nil)
@@ -102,3 +106,4 @@ end
 
 # test
 puts multiply_els([1, 2, 3, 4, 5])
+puts [1,1,1,2,3,4,5].my_count(1)
